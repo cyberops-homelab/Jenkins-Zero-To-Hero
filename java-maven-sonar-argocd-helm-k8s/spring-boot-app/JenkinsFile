@@ -1,9 +1,3 @@
-
-def COLOR_MAP = [
-    'FAILURE': 'danger',
-    'SUCCESS': 'good'
-]
-
 pipeline {
   agent {
     docker {
@@ -12,11 +6,6 @@ pipeline {
     }
   }
   stages {
-
-    environment {
-        SCANNER_HOME=tool 'sonar-scanner'
-    }
-
     stage('Checkout Git') {
       steps {
         git branch: 'main', url: 'https://github.com/cyberops-homelab/Jenkins-Zero-To-Hero.git'
