@@ -1,10 +1,16 @@
 pipeline {
   agent {
-    docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-    }
+    label "docker-services"
   }
+
+  tools {
+    maven "maven3"
+  }
+
+  // environment {
+  //   SCANNER_HOME=tool 'sonar-scanner'
+  // }
+
   stages {
     stage('Checkout Git') {
       steps {
@@ -25,7 +31,7 @@ pipeline {
       }
       steps {
         withCredentials([string(credentialsId: 'sonar-ultimate-demo', variable: 'SONAR_AUTH_TOKEN')]) {
-          sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL} -Dsonar.projectKey=${SONAR_PROJECTKEY}'
+          sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL} -Dsonar.projectKey=${SONAR_PROJECTKEY}'
         }
       }
     }
