@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: 
+        image: cyber0ps/ultimate-demo:8
         ports:
         - containerPort: 8080
