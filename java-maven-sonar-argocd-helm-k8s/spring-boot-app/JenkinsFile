@@ -71,8 +71,7 @@ pipeline {
             withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     git config user.email "dattnt0209@gmail.com"
-                    git config user.name "admin"
-                    BUILD_NUMBER=${BUILD_NUMBER}
+                    git config user.name "jenkins"
                     sed -i "s#image: cyber0ps/ultimate-demo:.*#image: ${IMAGE}#" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
